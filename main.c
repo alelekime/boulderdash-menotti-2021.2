@@ -1,28 +1,32 @@
 #include "jogo.h"
+#include "auxiliar.h"
 
 int main()
-{   inicializa();
+{
+    inicializa_allegro();
+
     ponteiros_allegro *ponteiroAllegro = malloc(sizeof(ponteiros_allegro));
 
-    ponteiroAllegro->timer = al_create_timer(1.0 / 30.0);
-    must_init(ponteiroAllegro->timer, "timer");
-
-    ponteiroAllegro->queue = al_create_event_queue();
-    must_init(ponteiroAllegro->queue, "queue");
-
-    al_set_new_display_option(ALLEGRO_SAMPLE_BUFFERS, 1, ALLEGRO_SUGGEST);
-    al_set_new_display_option(ALLEGRO_SAMPLES, 8, ALLEGRO_SUGGEST);
-    al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
-
-    ponteiroAllegro->disp = al_create_display(640, 480);
-    must_init(ponteiroAllegro->disp, "display");
-
-    ponteiroAllegro->font = al_create_builtin_font();
-    must_init(ponteiroAllegro->font, "font");
+    inicializa_timer(ponteiroAllegro);
+    inicializa_queue(ponteiroAllegro);
+    inicializa_display(ponteiroAllegro);
+    inicializa_fontes(ponteiroAllegro);
 
     al_register_event_source(ponteiroAllegro->queue, al_get_keyboard_event_source());
     al_register_event_source(ponteiroAllegro->queue, al_get_display_event_source(ponteiroAllegro->disp));
     al_register_event_source(ponteiroAllegro->queue, al_get_timer_event_source(ponteiroAllegro->timer));
+
+    ALLEGRO_BITMAP *personagem = al_load_bitmap("resouces/texturas/diamante.png");
+    if (!personagem)
+    {
+        printf("couldn't load personagem\n");
+        return 1;
+    }
+
+    jogo *boulder_dash = malloc(sizeof(jogo));
+    boulder_dash->dados_jogo = malloc(sizeof(dados));
+    boulder_dash->niveis_jogo = malloc(sizeof(niveis) * NIVEIS);
+    
 
     bool done = false;
     bool redraw = true;
@@ -31,14 +35,10 @@ int main()
     float x, y;
     x = 100;
     y = 100;
-
-#define KEY_SEEN 1
-#define KEY_RELEASED 2
-
-    unsigned char key[ALLEGRO_KEY_MAX];
     memset(key, 0, sizeof(key));
 
     al_start_timer(ponteiroAllegro->timer);
+
     while (1)
     {
         al_wait_for_event(ponteiroAllegro->queue, &event);
@@ -82,19 +82,19 @@ int main()
         if (redraw && al_is_event_queue_empty(ponteiroAllegro->queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_textf(ponteiroAllegro->font, al_map_rgb(255, 255, 255), 0, 0, 0, "X: %.1f Y: %.1f", x, y);
-            al_draw_filled_rectangle(x, y, x + 10, y + 10, al_map_rgb(255, 0, 0));
-
+            al_draw_textf(ponteiroAllegro->fontesAllegro->fonte_principal, al_map_rgb(255, 255, 255), 0, 0, 0, "X: %.1f Y: %.1f", x, y);
+            // al_draw_filled_rectangle(x, y, x + 10, y + 10, al_map_rgb(0, 255, 0));
+            al_draw_bitmap(personagem, x, y, 0);
             al_flip_display();
 
             redraw = false;
         }
     }
 
-    al_destroy_font(ponteiroAllegro->font);
-    al_destroy_display(ponteiroAllegro->disp);
-    al_destroy_timer(ponteiroAllegro->timer);
-    al_destroy_event_queue(ponteiroAllegro->queue);
+    // al_destroy_font(ponteiroAllegro->font);
+    // al_destroy_display(ponteiroAllegro->disp);
+    // al_destroy_timer(ponteiroAllegro->timer);
+    // al_destroy_event_queue(ponteiroAllegro->queue);
 
     return 0;
 }

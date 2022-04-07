@@ -15,15 +15,49 @@
 #include <stdio.h>
 #include <time.h>
 
+#define KEY_SEEN 1
+#define KEY_RELEASED 2
+#define NIVEIS 10
+
+unsigned char key[ALLEGRO_KEY_MAX];
+
+typedef enum
+{
+    VAZIO,
+    TIJOLO,
+    TERRA,
+    ROCHA,
+    BORDA,
+    DIAMANTE,
+    PERSONAGEM,
+    PORTA
+} item;
+
 typedef struct
 {
+    ALLEGRO_BITMAP *image;
+    item item;
 
-    ALLEGRO_TIMER *timer;
-    ALLEGRO_EVENT_QUEUE *queue;
-    ALLEGRO_DISPLAY *disp;
-    ALLEGRO_FONT *font;
+} itens;
 
-} ponteiros_allegro;
+typedef struct
+{
+    int ganhou;
+    int diamante;
+    int pontos;
+    int tempo;
+} dados;
 
-void must_init(bool test, const char *description);
-void inicializa();
+typedef struct
+{
+    itens **mapa_jogo;
+    int nivel;
+} niveis;
+
+typedef struct
+{
+    niveis *niveis_jogo;
+    dados *dados_jogo;
+    int linhas;
+    int colunas;
+}jogo;
