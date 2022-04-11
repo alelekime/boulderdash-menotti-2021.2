@@ -74,4 +74,4 @@ void libera_matriz(itens **mapa);
 jogo *inicializa_jogo();
 void inicializa_mapa(jogo *boulder_dash);
 void le_mapa(jogo *boulder_dash, char *nome, int nivel);
-void atualiza_mapa(jogo *boulder_dash, int nivel);
+void atualiza_mapa(itens **mapa_jogo, int nivel, int linhas, int colunas);
