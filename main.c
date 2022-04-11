@@ -82,9 +82,8 @@ int main()
             al_draw_textf(ponteiroAllegro->fontesAllegro->fonte_principal, al_map_rgb(255, 255, 255), 0, 0, 0, "X: %.1f Y: %.1f", x, y);
             // al_draw_filled_rectangle(x, y, x + 10, y + 10, al_map_rgb(0, 255, 0));
             al_draw_bitmap(personagem, x, y, 0);
-            fprintf(stderr, "aqui");
 
-            atualiza_mapa(boulder_dash, 0);
+            atualiza_mapa(boulder_dash->niveis_jogo[0].mapa_jogo, 0,boulder_dash->linhas, boulder_dash->colunas );
             al_flip_display();
 
             redraw = false;
