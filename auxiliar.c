@@ -76,23 +76,40 @@ void inicializa_fontes(ponteiros_allegro *ponteiroAllegro)
     must_init(ponteiroAllegro->fontesAllegro->fonte, "Fontes");
 }
 
-/* ALOCA A MATRIZ DE VETORES DE VETORES */
-int **aloca_matriz(int linhas, int colunas)
+ALLEGRO_BITMAP *load_bitmap_at_size(const char *filename, int w, int h)
 {
-    int i;
+    ALLEGRO_BITMAP *resized_bmp, *loaded_bmp, *prev_target;
 
-    int **mapa = malloc(sizeof(int *) * (linhas));
-    mapa[0] = malloc(sizeof(int) * (colunas * linhas));
+    // 1. create a temporary bitmap of size we want
+    resized_bmp = al_create_bitmap(w, h);
+    if (!resized_bmp)
+        return NULL;
 
-    for (i = 0; i < linhas; i++)
-        mapa[i] = mapa[0] + i * colunas;
+    // 2. load the bitmap at the original size
+    loaded_bmp = al_load_bitmap(filename);
+    if (!loaded_bmp)
+    {
+        al_destroy_bitmap(resized_bmp);
+        return NULL;
+    }
 
-    return mapa;
-}
+    // 3. set the target bitmap to the resized bmp
+    prev_target = al_get_target_bitmap();
+    al_set_target_bitmap(resized_bmp);
 
-/* DESALOCA A MATRIZ */
-void libera_matriz(unsigned char **tabulheiro)
-{
-    free(tabulheiro[0]);
-    free(tabulheiro);
+    // 4. copy the loaded bitmap to the resized bmp
+    al_draw_scaled_bitmap(loaded_bmp,
+                          0, 0,                             // source origin
+                          al_get_bitmap_width(loaded_bmp),  // source width
+                          al_get_bitmap_height(loaded_bmp), // source height
+                          0, 0,                             // target origin
+                          w, h,                             // target dimensions
+                          0                                 // flags
+    );
+
+    // 5. restore the previous target and clean up
+    al_set_target_bitmap(prev_target);
+    al_destroy_bitmap(loaded_bmp);
+
+    return resized_bmp;
 }

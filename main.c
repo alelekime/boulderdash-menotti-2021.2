@@ -22,11 +22,8 @@ int main()
         printf("couldn't load personagem\n");
         return 1;
     }
-
-    jogo *boulder_dash = malloc(sizeof(jogo));
-    boulder_dash->dados_jogo = malloc(sizeof(dados));
-    boulder_dash->niveis_jogo = malloc(sizeof(niveis) * NIVEIS);
-    
+    jogo *boulder_dash = inicializa_jogo();
+    inicializa_mapa(boulder_dash);
 
     bool done = false;
     bool redraw = true;
@@ -85,6 +82,9 @@ int main()
             al_draw_textf(ponteiroAllegro->fontesAllegro->fonte_principal, al_map_rgb(255, 255, 255), 0, 0, 0, "X: %.1f Y: %.1f", x, y);
             // al_draw_filled_rectangle(x, y, x + 10, y + 10, al_map_rgb(0, 255, 0));
             al_draw_bitmap(personagem, x, y, 0);
+            fprintf(stderr, "aqui");
+
+            atualiza_mapa(boulder_dash, 0);
             al_flip_display();
 
             redraw = false;

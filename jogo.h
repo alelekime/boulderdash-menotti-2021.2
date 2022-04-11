@@ -14,10 +14,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <errno.h>
+#include <math.h>
 
 #define KEY_SEEN 1
 #define KEY_RELEASED 2
 #define NIVEIS 10
+#define SPRITE 16
 
 unsigned char key[ALLEGRO_KEY_MAX];
 
@@ -27,7 +33,7 @@ typedef enum
     TIJOLO,
     TERRA,
     ROCHA,
-    BORDA,
+    // BORDA,
     DIAMANTE,
     PERSONAGEM,
     PORTA
@@ -60,4 +66,12 @@ typedef struct
     dados *dados_jogo;
     int linhas;
     int colunas;
-}jogo;
+} jogo;
+
+itens **aloca_matriz(int linhas, int colunas);
+void libera_matriz(itens **mapa);
+
+jogo *inicializa_jogo();
+void inicializa_mapa(jogo *boulder_dash);
+void le_mapa(jogo *boulder_dash, char *nome, int nivel);
+void atualiza_mapa(jogo *boulder_dash, int nivel);

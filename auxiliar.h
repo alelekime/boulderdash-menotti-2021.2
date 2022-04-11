@@ -38,5 +38,4 @@ void inicializa_timer(ponteiros_allegro *ponteiroAllegro);
 void inicializa_queue(ponteiros_allegro *ponteiroAllegro);
 void inicializa_display(ponteiros_allegro *ponteiroAllegro);
 void inicializa_fontes(ponteiros_allegro *ponteiroAllegro);
-int **aloca_matriz(int linhas, int colunas);
-void libera_matriz(unsigned char **tabulheiro);
+ALLEGRO_BITMAP *load_bitmap_at_size(const char *filename, int w, int h);
