@@ -16,14 +16,10 @@ int main()
     al_register_event_source(ponteiroAllegro->queue, al_get_display_event_source(ponteiroAllegro->disp));
     al_register_event_source(ponteiroAllegro->queue, al_get_timer_event_source(ponteiroAllegro->timer));
 
-    ALLEGRO_BITMAP *personagem = al_load_bitmap("resouces/texturas/diamante.png");
-    if (!personagem)
-    {
-        printf("couldn't load personagem\n");
-        return 1;
-    }
     jogo *boulder_dash = inicializa_jogo();
     inicializa_mapa(boulder_dash);
+
+    teclado movimento;
 
     bool done = false;
     bool redraw = true;
@@ -44,14 +40,20 @@ int main()
         {
         case ALLEGRO_EVENT_TIMER:
             if (key[ALLEGRO_KEY_UP])
-                y--;
-            if (key[ALLEGRO_KEY_DOWN])
-                y++;
-            if (key[ALLEGRO_KEY_LEFT])
-                x--;
-            if (key[ALLEGRO_KEY_RIGHT])
-                x++;
+            {
+                movimento = CIMA;
+                fprintf(stderr,"%d", movimento);
+                fprintf(stderr, "x:%d y:%d\n", boulder_dash->niveis_jogo[1].personagem_jogo->x, boulder_dash->niveis_jogo[1].personagem_jogo->y);
 
+                atualiza_personagem(boulder_dash, 1, movimento);
+                fprintf(stderr,"x:%d y:%d\n", boulder_dash->niveis_jogo[1].personagem_jogo->x, boulder_dash->niveis_jogo[1].personagem_jogo->y);
+            }
+            if (key[ALLEGRO_KEY_DOWN])
+                movimento = BAIXO;
+            if (key[ALLEGRO_KEY_LEFT])
+                movimento = ESQUERDA;
+            if (key[ALLEGRO_KEY_RIGHT])
+                movimento = DIREITA;
             if (key[ALLEGRO_KEY_ESCAPE])
                 done = true;
 
@@ -66,6 +68,7 @@ int main()
             break;
         case ALLEGRO_EVENT_KEY_UP:
             key[event.keyboard.keycode] &= KEY_RELEASED;
+            // movimento = NADA;
             break;
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
@@ -82,7 +85,7 @@ int main()
 
             al_clear_to_color(al_map_rgb(0, 0, 0));
             al_draw_textf(ponteiroAllegro->fontesAllegro->fonte_principal, al_map_rgb(255, 255, 255), 0, 0, 0, "X: %.1f Y: %.1f", x, y);
-            atualiza_mapa(boulder_dash->niveis_jogo[0].mapa_jogo, 0,boulder_dash->linhas, boulder_dash->colunas );
+            atualiza_mapa(boulder_dash->niveis_jogo[1].mapa_jogo, 0, boulder_dash->linhas, boulder_dash->colunas);
             al_set_target_backbuffer(ponteiroAllegro->disp);
             al_draw_scaled_bitmap(ponteiroAllegro->buffer, 0, 0, LARGURA, ALTURA, 0, 0, DISP_W, DISP_H, 0);
 

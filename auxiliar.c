@@ -35,7 +35,7 @@ void inicializa_allegro()
 /*TIMER*/
 void inicializa_timer(ponteiros_allegro *ponteiroAllegro)
 {
-    ponteiroAllegro->timer = al_create_timer(1.0 / 60.0);
+    ponteiroAllegro->timer = al_create_timer(1.0 / 10.0);
     must_init(ponteiroAllegro->timer, "timer");
 }
 

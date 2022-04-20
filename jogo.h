@@ -31,37 +31,68 @@ typedef enum
 {
     VAZIO,
     TIJOLO,
+    TIJOLO_BRANCO,
     TERRA,
     ROCHA,
-    // BORDA,
+    ROCHA_BRANCA,
+    BARRA,
+    METAL,
+    ESTRELA,
     DIAMANTE,
     PERSONAGEM,
-    PORTA
+    PERSONAGEM_BRANCO,
+    PORTA,
+    PORTA_BRANCA
 } item;
+
+typedef enum{
+    CIMA,
+    BAIXO,
+    DIREITA,
+    ESQUERDA,
+    NADA
+} teclado;
+
+typedef enum{
+    GANHOU,
+    PERDEU,
+    PAUSADO
+} estado;
+
+typedef struct
+{
+    int x;
+    int y;
+    int diamantes;
+    int pontos;
+    item item;
+} personagem;
 
 typedef struct
 {
     ALLEGRO_BITMAP *image;
     item item;
+    
 
 } itens;
 
 typedef struct
 {
     int ganhou;
-    int diamante;
-    int pontos;
+    
     int tempo;
 } dados;
 
 typedef struct
 {
     itens **mapa_jogo;
+    personagem *personagem_jogo;
     int nivel;
 } niveis;
 
 typedef struct
 {
+    estado estado_jogo;
     niveis *niveis_jogo;
     dados *dados_jogo;
     int linhas;
@@ -74,4 +105,7 @@ void libera_matriz(itens **mapa);
 jogo *inicializa_jogo();
 void inicializa_mapa(jogo *boulder_dash);
 void le_mapa(jogo *boulder_dash, char *nome, int nivel);
+void altera_posicao_personagem(personagem *personagem_jogo, int i, int j);
 void atualiza_mapa(itens **mapa_jogo, int nivel, int linhas, int colunas);
+void verifica_lados(jogo * boulder_dash, int nivel, int x,int y);
+void atualiza_personagem(jogo *boulder_dash, int nivel, teclado movimento);
