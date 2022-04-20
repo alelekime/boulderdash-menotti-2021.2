@@ -128,7 +128,7 @@ void atualiza_mapa(itens **mapa_jogo, int nivel, int linhas, int colunas)
 
     for (i = 0; i < linhas; i++)
     {
-        printf("\ni :>> %d\n", i);
+        // printf("\ni :>> %d\n", i);
 
         for (j = 0; j < colunas; j++)
         {
@@ -180,3 +180,4 @@ void atualiza_mapa(itens **mapa_jogo, int nivel, int linhas, int colunas)
         }
     }
 }
+

@@ -15,6 +15,13 @@
 #include <stdio.h>
 #include <time.h>
 
+#define LARGURA 1930
+#define ALTURA 1050
+
+#define ESCALA 3
+#define DISP_W (LARGURA * ESCALA)
+#define DISP_H (ALTURA * ESCALA)
+
 typedef struct fontes_allegro
 {
     ALLEGRO_FONT *fonte_principal;
@@ -28,6 +35,7 @@ typedef struct
     ALLEGRO_TIMER *timer;
     ALLEGRO_EVENT_QUEUE *queue;
     ALLEGRO_DISPLAY *disp;
+    ALLEGRO_BITMAP *buffer;
     fontes_allegro *fontesAllegro;
 
 } ponteiros_allegro;

@@ -49,12 +49,15 @@ void inicializa_queue(ponteiros_allegro *ponteiroAllegro)
 /*DISPLAY*/
 void inicializa_display(ponteiros_allegro *ponteiroAllegro)
 {
+    /*SCALED DISPLAY*/
+    ponteiroAllegro->buffer = al_create_bitmap(LARGURA, ALTURA);
+    must_init(ponteiroAllegro->buffer, "bitmap buffer");
     /**/
     al_set_new_display_option(ALLEGRO_SAMPLE_BUFFERS, 1, ALLEGRO_SUGGEST);
     al_set_new_display_option(ALLEGRO_SAMPLES, 8, ALLEGRO_SUGGEST);
     al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
 
-    ponteiroAllegro->disp = al_create_display(1280, 960);
+    ponteiroAllegro->disp = al_create_display(LARGURA, ALTURA);
     must_init(ponteiroAllegro->disp, "display");
 }
 
