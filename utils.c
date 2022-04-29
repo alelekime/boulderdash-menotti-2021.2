@@ -66,11 +66,11 @@ void inicializa_fontes(ponteiros_allegro *ponteiroAllegro)
     /*ALOCACAO DINAMICA DE UM STRUCT PARA GERENCIAR AS FONTES */
     ponteiroAllegro->fontesAllegro = malloc(sizeof(fontes_allegro));
     /*PONTEIRO USADO PARA A FONTE*/
-    ponteiroAllegro->fontesAllegro->fonte_principal = al_load_font("resouces/fonte/BoulderDash.ttf", 20, 0);
+    ponteiroAllegro->fontesAllegro->fonte_principal = al_load_font("resources/fonte/BoulderDash.ttf", 20, 0);
     must_init(ponteiroAllegro->fontesAllegro->fonte_principal, "Fonte Principal ");
 
     /*PONTEIRO USADO PARA A FONTE*/
-    ponteiroAllegro->fontesAllegro->fonte_secundaria = al_load_font("resouces/fonte/BoulderDash.ttf", 70, 0);
+    ponteiroAllegro->fontesAllegro->fonte_secundaria = al_load_font("resources/fonte/BoulderDash.ttf", 70, 0);
     must_init(ponteiroAllegro->fontesAllegro->fonte_secundaria, "Fonte Secundaria");
 
     /*INICIA CONFIGURACOES DE FONTES*/

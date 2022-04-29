@@ -23,9 +23,9 @@
 #define KEY_SEEN 1
 #define KEY_RELEASED 2
 #define NIVEIS 10
-#define SPRITE 16
-#define LINHAS 41
-#define COlUNAS 23
+#define LINHAS 22
+#define COlUNAS 41
+#define SPRITE 40
 
 unsigned char key[ALLEGRO_KEY_MAX];
 
@@ -118,7 +118,9 @@ typedef struct
 
 itens **aloca_matriz(int linhas, int colunas);
 void libera_matriz(itens **mapa);
-void *inicializa_jogo(estado *estado_jogo, dados *dados_jogo, itens **mapa_jogo, personagem *personagem_jogo);
 void inicializa_nivel(dados *dados_jogo, itens **mapa_jogo, personagem *personagem_jogo, int nivel_atual);
 void le_mapa(dados *dados_jogo, itens **mapa_jogo, char *mapa_nome);
+void atualiza_mapa(itens **mapa_jogo);
+ALLEGRO_BITMAP *encontra_imagem(item elemento);
 item encontra_tipo(char tipo);
+void encontra_objetos(dados *dados_jogo, monstros *monstros_jogo, itens **mapa_jogo);
